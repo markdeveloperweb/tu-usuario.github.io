@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marcos Osorio — Desarrollador Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--accent:#e8ff47;--text:#f0f0e8;--muted:#5a5a52;--border:rgba(240,240,232,0.08)}
+html{scroll-behavior:smooth}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;transition:all 0.4s}
+nav.scrolled{background:rgba(10,10,10,0.96);backdrop-filter:blur(12px);padding:16px 48px;border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;letter-spacing:0.05em;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:10px 22px;text-decoration:none;border-radius:2px;transition:all 0.2s}
+.nav-cta:hover{background:#d4eb30}
+
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(232,255,71,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,255,71,0.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:20%;right:10%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(232,255,71,0.06),transparent 70%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;width:100%;max-width:1200px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(232,255,71,0.25);padding:6px 14px;border-radius:20px;margin-bottom:32px;opacity:0;animation:fadeUp 0.8s 0.2s forwards}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(60px,10vw,130px);font-weight:800;line-height:0.9;letter-spacing:-0.03em;opacity:0;animation:fadeUp 0.8s 0.35s forwards}
+.hero-title .yl{color:var(--accent);display:block}
+.hero-title .dim{color:var(--muted);display:block}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;margin-top:64px;flex-wrap:wrap;gap:32px;opacity:0;animation:fadeUp 0.8s 0.55s forwards}
+.hero-desc{max-width:400px;font-size:14px;font-weight:300;color:var(--muted);line-height:1.85}
+.hero-desc strong{color:var(--text);font-weight:500}
+.hero-nums{display:flex;gap:48px}
+.hnum-n{font-family:'Syne',sans-serif;font-size:44px;font-weight:800;color:var(--accent);line-height:1}
+.hnum-l{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.hero-scroll{position:absolute;bottom:36px;left:48px;display:flex;align-items:center;gap:12px;opacity:0;animation:fadeUp 0.8s 0.9s forwards}
+.hero-scroll span{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted)}
+.scroll-bar{width:40px;height:1px;background:linear-gradient(to right,var(--muted),transparent)}
+
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 0;overflow:hidden;background:var(--bg2)}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 22s linear infinite}
+.marquee-item{font-family:'Syne',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);padding:0 32px;flex-shrink:0}
+.marquee-dot{color:var(--accent);margin:0 4px}
+
+.about{padding:120px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border)}
+.sec-label{font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.about-title{font-family:'Syne',sans-serif;font-size:clamp(32px,3.5vw,48px);font-weight:700;line-height:1.1;margin-bottom:24px}
+.about-title em{font-style:normal;color:var(--accent)}
+.about-body{font-size:14px;font-weight:300;color:var(--muted);line-height:1.85;margin-bottom:14px}
+.about-body strong{color:var(--text);font-weight:500}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.sk{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border);color:var(--muted);border-radius:2px;transition:all 0.25s}
+.sk:hover{border-color:rgba(232,255,71,0.4);color:var(--accent);background:rgba(232,255,71,0.04)}
+.about-visual{position:relative;height:460px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.about-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(232,255,71,0.07),transparent 60%)}
+.av-letters{font-family:'Syne',sans-serif;font-size:140px;font-weight:800;color:rgba(232,255,71,0.08);line-height:1;user-select:none;position:relative;z-index:1}
+.av-badge{position:absolute;bottom:24px;left:24px;background:var(--accent);color:var(--bg);font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:8px 16px;border-radius:2px}
+
+.projects{padding:120px 48px;border-bottom:1px solid var(--border)}
+.proj-header{max-width:1200px;margin:0 auto 64px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.proj-title{font-family:'Syne',sans-serif;font-size:clamp(38px,5vw,64px);font-weight:800;line-height:1}
+.proj-title em{color:var(--accent);font-style:normal}
+.proj-count{font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.proj-list{max-width:1200px;margin:0 auto}
+.proj-item{display:grid;grid-template-columns:64px 1fr 280px 100px 40px;gap:32px;align-items:center;padding:36px 0;border-top:1px solid var(--border);text-decoration:none;color:var(--text);transition:all 0.3s}
+.proj-item:last-child{border-bottom:1px solid var(--border)}
+.proj-item:hover{padding-left:8px}
+.proj-item:hover .proj-num{color:var(--accent)}
+.proj-item:hover .proj-name{color:var(--accent)}
+.proj-item:hover .proj-arrow{color:var(--accent);transform:translateX(4px)}
+.proj-num{font-family:'Syne',sans-serif;font-size:13px;font-weight:500;color:var(--muted);transition:color 0.3s}
+.proj-name{font-family:'Syne',sans-serif;font-size:clamp(22px,3vw,40px);font-weight:700;line-height:1;transition:color 0.3s}
+.proj-meta{font-size:12px;font-weight:300;color:var(--muted);line-height:1.7}
+.proj-meta strong{display:block;font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text);margin-bottom:6px}
+.proj-thumb{height:64px;overflow:hidden;border:1px solid var(--border);border-radius:2px}
+.proj-thumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%)saturate(1.1)}
+.proj-arrow{font-size:20px;color:var(--muted);transition:all 0.3s}
+
+.services{padding:120px 48px;background:var(--bg2)}
+.serv-inner{max-width:1200px;margin:0 auto}
+.serv-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px;flex-wrap:wrap;gap:20px}
+.serv-title{font-family:'Syne',sans-serif;font-size:clamp(38px,5vw,64px);font-weight:800;line-height:1}
+.serv-title em{color:var(--accent);font-style:normal}
+.serv-sub{font-size:13px;font-weight:300;color:var(--muted);max-width:260px;line-height:1.7}
+.serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.serv-card{background:var(--bg2);padding:48px 36px;transition:background 0.3s}
+.serv-card:hover{background:var(--bg3)}
+.serv-n{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;color:rgba(232,255,71,0.06);line-height:1;margin-bottom:20px}
+.serv-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:14px}
+.serv-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:24px}
+.serv-price{font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);border-top:1px solid var(--border);padding-top:20px}
+
+.contact{padding:140px 48px;text-align:center;position:relative;overflow:hidden}
+.contact::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,255,71,0.05),transparent 70%);pointer-events:none}
+.contact-inner{position:relative;z-index:1;max-width:800px;margin:0 auto}
+.contact-label{font-size:11px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+.contact-title{font-family:'Syne',sans-serif;font-size:clamp(48px,8vw,110px);font-weight:800;line-height:0.9;letter-spacing:-0.03em;margin-bottom:48px}
+.contact-title em{color:var(--accent);font-style:normal;display:block}
+.contact-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.cbtn{font-size:12px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:15px 32px;text-decoration:none;border-radius:2px;transition:all 0.3s;display:inline-block}
+.cbtn.primary{background:var(--accent);color:var(--bg)}
+.cbtn.primary:hover{background:#d4eb30}
+.cbtn.secondary{border:1px solid var(--border);color:var(--muted)}
+.cbtn.secondary:hover{border-color:var(--text);color:var(--text)}
+
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-logo{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--text)}
+.footer-logo span{color:var(--accent)}
+.footer-copy{font-size:11px;color:var(--muted)}
+.footer-wa{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);text-decoration:none}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.85s,transform 0.85s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.12s}.d2{transition-delay:0.24s}.d3{transition-delay:0.36s}
+
+@media(max-width:960px){
+  nav{padding:16px 24px}nav.scrolled{padding:12px 24px}.nav-links{display:none}
+  .hero{padding:100px 24px 72px}.hero-scroll{left:24px}
+  .about{grid-template-columns:1fr;padding:80px 24px;gap:48px}
+  .projects{padding:80px 24px}
+  .proj-item{grid-template-columns:48px 1fr 36px;gap:16px}
+  .proj-meta,.proj-thumb{display:none}
+  .services{padding:80px 24px}.serv-grid{grid-template-columns:1fr}
+  .contact{padding:80px 24px}
+  footer{padding:24px;flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Marcos<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+  </ul>
+  <a href="https://wa.me/573207525895?text=Hola%20Marcos%2C%20quiero%20un%20sitio%20web" target="_blank" class="nav-cta">Contrátame</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-tag"><span></span>Disponible para proyectos</div>
+    <h1 class="hero-title">
+      Marcos<br>
+      <span class="yl">Osorio</span>
+      <span class="dim">Dev.</span>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">Creo sitios web <strong>elegantes y funcionales</strong> para negocios que quieren destacar. Rápidos, bonitos y con resultados reales.</p>
+      <div class="hero-nums">
+        <div><div class="hnum-n">2+</div><div class="hnum-l">Proyectos</div></div>
+        <div><div class="hnum-n">100%</div><div class="hnum-l">Satisfacción</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">HTML5</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">CSS3</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Diseño web</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Landing pages</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Responsive</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">GitHub Pages</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">WhatsApp integrado</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">HTML5</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">CSS3</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Diseño web</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Landing pages</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Responsive</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">GitHub Pages</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">WhatsApp integrado</span><span class="marquee-item"><span class="marquee-dot">✦</span></span>
+  </div>
+</div>
+
+<section id="sobre-mi">
+  <div class="about">
+    <div class="reveal">
+      <div class="sec-label">Sobre mí</div>
+      <h2 class="about-title">Diseño webs que<br>generan <em>resultados</em></h2>
+      <p class="about-body">Soy desarrollador web colombiano especializado en crear sitios que no solo se ven increíbles, sino que <strong>convierten visitantes en clientes</strong>.</p>
+      <p class="about-body">Trabajo con HTML, CSS y las mejores herramientas del momento para entregar proyectos rápidos, responsivos y optimizados — a un precio justo para el mercado latinoamericano.</p>
+      <p class="about-body">Cada proyecto lo trato como si fuera el mío propio.</p>
+      <div class="skills">
+        <span class="sk">HTML5</span>
+        <span class="sk">CSS3</span>
+        <span class="sk">JavaScript</span>
+        <span class="sk">Responsive</span>
+        <span class="sk">GitHub Pages</span>
+        <span class="sk">Landing Pages</span>
+        <span class="sk">WhatsApp API</span>
+      </div>
+    </div>
+    <div class="about-visual reveal d1">
+      <div class="av-letters">MO</div>
+      <div class="av-badge">Marcos Osorio · Dev</div>
+    </div>
+  </div>
+</section>
+
+<section class="projects" id="proyectos">
+  <div class="proj-header reveal">
+    <h2 class="proj-title">Proyectos <em>recientes</em></h2>
+    <span class="proj-count">02 trabajos</span>
+  </div>
+  <div class="proj-list">
+    <a href="https://markdeveloperweb.github.io" target="_blank" class="proj-item reveal">
+      <span class="proj-num">01</span>
+      <div class="proj-name">Hotel Playa Paraíso</div>
+      <div class="proj-meta">
+        <strong>Sitio web completo</strong>
+        Hotel boutique en Dibulla, La Guajira. Galería, habitaciones, menú y reservas vía WhatsApp.
+      </div>
+      <div class="proj-thumb">
+        <img src="imgs/Screenshot_20260315_173959_Maps.jpg" alt="Hotel Playa Paraíso">
+      </div>
+      <span class="proj-arrow">→</span>
+    </a>
+    <a href="https://markdeveloperweb.github.io/restaurante-muestra" target="_blank" class="proj-item reveal d1">
+      <span class="proj-num">02</span>
+      <div class="proj-name">Maison Doré</div>
+      <div class="proj-meta">
+        <strong>Landing page</strong>
+        Restaurante de alta cocina. Menú interactivo, formulario de reservas y diseño elegante.
+      </div>
+      <div class="proj-thumb" style="background:#1a1612;display:flex;align-items:center;justify-content:center;font-size:13px;color:#b8963e;letter-spacing:0.1em">
+        Maison Doré
+      </div>
+      <span class="proj-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<section class="services" id="servicios">
+  <div class="serv-inner">
+    <div class="serv-header reveal">
+      <h2 class="serv-title">Lo que <em>ofrezco</em></h2>
+      <p class="serv-sub">Servicios para negocios que quieren crecer en internet sin complicaciones.</p>
+    </div>
+    <div class="serv-grid">
+      <div class="serv-card reveal">
+        <div class="serv-n">01</div>
+        <div class="serv-name">Landing Page</div>
+        <p class="serv-desc">Una página completa, responsiva y optimizada para convertir visitantes en clientes. Lista en 1 a 2 días.</p>
+        <div class="serv-price">Desde $50 USD · 2 días</div>
+      </div>
+      <div class="serv-card reveal d1">
+        <div class="serv-n">02</div>
+        <div class="serv-name">Sitio Web Completo</div>
+        <p class="serv-desc">Sitio con galería, menú, contacto y formulario de reservas o cotización vía WhatsApp.</p>
+        <div class="serv-price">Desde $80 USD · 5 días</div>
+      </div>
+      <div class="serv-card reveal d2">
+        <div class="serv-n">03</div>
+        <div class="serv-name">Correcciones y Mejoras</div>
+        <p class="serv-desc">Arreglos de diseño, velocidad o funcionalidad en tu sitio actual. Entrega el mismo día.</p>
+        <div class="serv-price">Desde $15 USD · Mismo día</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contacto">
+  <div class="contact-inner reveal">
+    <div class="contact-label">¿Trabajamos juntos?</div>
+    <h2 class="contact-title">
+      Hagamos algo<br>
+      <em>increíble</em>
+    </h2>
+    <div class="contact-btns">
+      <a href="https://wa.me/573207525895?text=Hola%20Marcos%2C%20quiero%20un%20sitio%20web" target="_blank" class="cbtn primary">WhatsApp</a>
+      <a href="https://workana.com" target="_blank" class="cbtn secondary">Ver en Workana</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Marcos<span>.</span></div>
+  <div class="footer-copy">© 2025 · Desarrollador web · Colombia</div>
+  <a href="https://wa.me/573207525895" target="_blank" class="footer-wa">320 752 5895</a>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
